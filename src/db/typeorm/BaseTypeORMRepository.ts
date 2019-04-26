@@ -1,6 +1,7 @@
-import { Repository, getRepository, ObjectType, FindManyOptions, FindConditions, UpdateResult, DeleteResult } from 'typeorm';
+import { Repository, getRepository, ObjectType, FindManyOptions, FindConditions } from 'typeorm';
+import { IRepository } from '../interfaces/IRepository';
 
-export abstract class BaseRepository<Model, Entity> {
+export abstract class BaseTypeORMRepository<Model, Entity> implements IRepository<Model> {
   private context: Repository<Entity>;
 
   public constructor(type: ObjectType<Entity>) {
@@ -32,15 +33,10 @@ export abstract class BaseRepository<Model, Entity> {
     return await this.context.save(model);
   }
 
-  public async update(model: Model): Promise<UpdateResult> {
-    // TODO: FIX UPDATE CIRTERIA
-    return await this.context.update('', model);
-  }
-
-  public async delete(model: Model): Promise<DeleteResult> {
-    // TODO: FIX DELETE CIRTERIA
-    return await this.context.delete('');
+  public async delete(model: Model): Promise<void> {
+    await this.context.delete(this.getCriteria(model));
   }
 
   protected abstract toModel(entity: Entity): Model;
+  protected abstract getCriteria(model: Model): object;
 }
