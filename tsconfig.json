@@ -10,7 +10,11 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "@common/*": ["./src/common/*"]
+      "@core/*": ["./src/core/*"],
+      "@common/*": ["./src/common/*"],
+      "@db/*": ["./src/db/*"],
+      "@config/*": ["./src/config/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "exclude": ["node_modules"]

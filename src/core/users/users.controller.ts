@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-import { Controller } from '@nestjs/common';
-
-@Controller('users')
-export class UsersController {}
-=======
 import { User } from './user.model';
 import { RegisterUserDto } from './dto/registerUser.dto';
 import { UserRepository } from './user.repository';
@@ -36,4 +30,3 @@ export class UsersController {
     }
 
 }
->>>>>>> Stashed changes
