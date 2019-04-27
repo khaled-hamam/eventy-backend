@@ -8,4 +8,4 @@ import { RequestsModule } from './requests/requests.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
