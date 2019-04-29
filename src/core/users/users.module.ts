@@ -10,4 +10,4 @@ import { CommonModule } from '@common/common.module';
   controllers: [UsersController],
   providers: [UserRepository, PlannerRepository],
 })
-export class UsersModule {}
+export class UsersModule { }

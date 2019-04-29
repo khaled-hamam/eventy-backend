@@ -3,4 +3,5 @@ export interface RegisterUserDTO {
     readonly email: string;
     readonly password: string;
     readonly mobile: string;
+    readonly role: "planner" | "creator";
 }
