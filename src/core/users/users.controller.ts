@@ -3,13 +3,19 @@ import { User } from './user.model';
 import { RegisterUserDTO } from './dto/registerUser.dto';
 import { LoginUserDTO } from './dto/loginUser.dto';
 import { UserRepository } from './user.repository';
+import { PlannerRepository } from './planner.repository';
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { response } from 'express';
+import { JwtService } from '@common/services/jwt.service';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly userRepository: UserRepository,
-        private readonly hashing: HashingService) { }
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly plannerRepository: PlannerRepository,
+        private readonly hashing: HashingService,
+        private readonly jwt: JwtService,
+    ) { }
 
     @Post('/register')
     async registerUser(@Body() registerUserDto: RegisterUserDTO) {
@@ -32,11 +38,19 @@ export class UsersController {
         }
 
         //compare given pw with hashing pw
-        if (await this.hashing.matchingPassword(loginUserDto.password, user.password) === false) {
+        if ((await this.hashing.matchingPassword(loginUserDto.password, user.password)) === false) {
             //TODO: log error
             return response.status(400);
         }
 
+        //get user role
+        const userPlanner = await this.plannerRepository.findOne({ user });
+        const body = {
+            role: userPlanner ? 'planner' : 'creator',
+            username: user.name,
+            useremail: user.email,
+        };
+
+        return { token: this.jwt.generateToken(body) };
     }
-    //TODO: Generate Token
 }
