@@ -1,4 +1,4 @@
-export interface ILoginUserDto {
+export interface LoginUserDTO {
     readonly email: string;
     readonly password: string;
 }

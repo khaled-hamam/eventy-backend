@@ -1,7 +1,7 @@
 import { HashingService } from './../../common/services/hashing.service';
 import { User } from './user.model';
-import { IRegisterUserDto } from './dto/registerUser.dto';
-import { ILoginUserDto } from './dto/loginUser.dto';
+import { RegisterUserDTO } from './dto/registerUser.dto';
+import { LoginUserDTO } from './dto/loginUser.dto';
 import { UserRepository } from './user.repository';
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { response } from 'express';
@@ -12,7 +12,7 @@ export class UsersController {
         private readonly hashing: HashingService) { }
 
     @Post('/register')
-    async registerUser(@Body() registerUserDto: IRegisterUserDto) {
+    async registerUser(@Body() registerUserDto: RegisterUserDTO) {
         // TODO: Validation
         let user = new User(registerUserDto);
 
@@ -22,7 +22,7 @@ export class UsersController {
     }
 
     @Post('/login')
-    async loginUser(@Body() loginUserDto: ILoginUserDto) {
+    async loginUser(@Body() loginUserDto: LoginUserDTO) {
         //TODO: Validation
         let user = await this.userRepository.findOne({ email: loginUserDto.email });
 
