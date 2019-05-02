@@ -4,7 +4,7 @@ import { RegisterUserDTO } from './dto/registerUser.dto';
 import { LoginUserDTO } from './dto/loginUser.dto';
 import { UserRepository } from './user.repository';
 import { PlannerRepository } from './planner.repository';
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { response } from 'express';
 import { JwtService } from '@common/services/jwt.service';
 
