@@ -30,8 +30,8 @@ export class ProfileController {
       ...user,
       ...editUserProfileDTO,
     };
-    console.log(user);
     await this.userRepository.save(user);
+
     response.status(200);
     return copyObject(UserProfileDTO, user);
   }
