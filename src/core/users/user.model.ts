@@ -1,8 +1,9 @@
 import { Event } from '@core/events/event.model';
 
 export interface IUser {
+  username: string;
   email: string;
-  name?: string;
+  fullName?: string;
   password: string;
   mobile?: string;
   pictureURL?: string;
@@ -10,8 +11,9 @@ export interface IUser {
 }
 
 export class User {
+  public username: string;
   public email: string;
-  public name: string;
+  public fullName: string;
   public password: string;
   public mobile: string;
   public pictureURL: string;
@@ -19,8 +21,9 @@ export class User {
 
   public constructor(data: IUser) {
     Object.assign(this, {
+      username: '',
       email: '',
-      name: '',
+      fullName: '',
       password: '',
       mobile: '',
       pictureURL: '',
