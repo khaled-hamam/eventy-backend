@@ -1,6 +1,7 @@
 import { Column, OneToMany, Entity, OneToOne, JoinColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { RequestEntity } from './request.entity';
+import { EventEntity } from './event.entity';
 
 @Entity('event_planner')
 export class EventPlannerEntity {
@@ -13,4 +14,28 @@ export class EventPlannerEntity {
 
   @OneToMany(type => RequestEntity, request => request.planner)
   public pendingRequests: RequestEntity[];
+
+  public get email(): string {
+    return this.user.email;
+  }
+
+  public get name(): string {
+    return this.user.name;
+  }
+
+  public get password(): string {
+    return this.user.password;
+  }
+
+  public get mobile(): string {
+    return this.user.mobile;
+  }
+
+  public get pictureURL(): string {
+    return this.user.pictureURL;
+  }
+
+  public get events(): EventEntity[] {
+    return this.user.events;
+  }
 }
