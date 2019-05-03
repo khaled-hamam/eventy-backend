@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
-import { passwordValidator } from '@utils/passwordValidator';
+import { passwordValidator } from '@utils/validation/passwordValidator';
 
 export class RegisterUserDTO {
   @IsString()
