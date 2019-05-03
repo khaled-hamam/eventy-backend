@@ -20,7 +20,7 @@ export class UsersController {
   @Post('/register')
   async registerUser(@Body() registerUserDto: RegisterUserDTO) {
     // TODO: Validation
-    let user = new User(registerUserDto);
+    const user = new User(registerUserDto);
 
     user.password = await this.hashing.hashPassword(user.password);
     await this.userRepository.save(user);
@@ -29,21 +29,21 @@ export class UsersController {
 
   @Post('/login')
   async loginUser(@Body() loginUserDto: LoginUserDTO) {
-    //TODO: Validation
-    let user = await this.userRepository.findOne({ email: loginUserDto.email });
+    // TODO: Validation
+    const user = await this.userRepository.findOne({ email: loginUserDto.email });
 
-    if (user.email == undefined) {
-      //TODO: log error
+    if (user.email === undefined) {
+      // TODO: log error
       return response.status(400);
     }
 
-    //compare given pw with hashing pw
+    // compare given pw with hashing pw
     if ((await this.hashing.matchingPassword(loginUserDto.password, user.password)) === false) {
-      //TODO: log error
+      // TODO: log error
       return response.status(400);
     }
 
-    //get user role
+    // get user role
     const userPlanner = await this.plannerRepository.findOne({ user });
     const body = {
       role: userPlanner ? 'planner' : 'creator',
