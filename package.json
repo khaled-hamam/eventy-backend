@@ -27,10 +27,10 @@
     "bcrypt": "^3.0.6",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.17.1",
-    "reflect-metadata": "^0.1.12",
+    "reflect-metadata": "^0.1.13",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3",
-    "typeorm": "^0.2.16"
+    "typeorm": "^0.2.17"
   },
   "devDependencies": {
     "@nestjs/testing": "^6.0.0",
