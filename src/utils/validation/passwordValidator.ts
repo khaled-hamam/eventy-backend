@@ -1,5 +1,5 @@
 import * as PasswordValidator from 'password-validator';
-import { IValidator } from './interfaces/IValidator';
+import { IValidator } from '../interfaces/IValidator';
 
 function createSchema(environment: string): IValidator {
   if (environment === 'development') {
