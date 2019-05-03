@@ -1,11 +1,14 @@
-import { Controller, Body, Get, Put, Param } from '@nestjs/common';
+import { Controller, Body, Get, Put, Param, UseGuards } from '@nestjs/common';
 
+import { AuthGuard } from './../../common/auth/auth.guard';
 import { EditUserProfileDTO } from './dto/editUserProfile.dto';
 import { UserProfileDTO } from './dto/userProfile.dto';
 import { PlannerRepository } from '@core/users/planner.repository';
 import { UserRepository } from '@core/users/user.repository';
 import { copyObject } from '@utils/copyObject';
 import { response } from 'express';
+import { Permissions } from '@common/auth/permissions/permissions.decorator';
+import { Permission } from '@common/auth/permissions/permission.enum';
 
 @Controller('/profiles')
 export class ProfileController {
@@ -22,6 +25,8 @@ export class ProfileController {
   }
 
   @Put('/:username')
+  @UseGuards(AuthGuard)
+  @Permissions(Permission.EditProfile)
   async editProfile(@Param('username') username: string, @Body() editUserProfileDTO: EditUserProfileDTO) {
     let user = await this.userRepository.findOne({ username });
     user = {
