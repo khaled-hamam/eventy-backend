@@ -1,13 +1,16 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, Unique } from 'typeorm';
 import { EventEntity } from './event.entity';
 
 @Entity('user')
 export class UserEntity {
   @PrimaryColumn()
+  public username: string;
+
+  @Column({ unique: true })
   public email: string;
 
   @Column()
-  public name: string;
+  public fullName: string;
 
   @Column()
   public password: string;

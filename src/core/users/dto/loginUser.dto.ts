@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { ValidateIf } from '@utils/ValidateIf.decorator';
 import { passwordValidator } from '@utils/validation/passwordValidator';
 
 export class LoginUserDTO {
@@ -7,6 +8,6 @@ export class LoginUserDTO {
 
   @IsNotEmpty()
   @IsString()
-  @ValidateIf(passwordValidator.validate)
+  @ValidateIf(password => passwordValidator.validate(password), { message: 'password is not valid' })
   public readonly password: string;
 }

@@ -21,7 +21,7 @@ export class UsersController {
   async registerUser(@Body() registerUserDto: RegisterUserDTO) {
     // TODO: Validation
     const user = new User(registerUserDto);
-
+    
     user.password = await this.hashing.hashPassword(user.password);
     await this.userRepository.save(user);
     response.status(201);
@@ -47,8 +47,9 @@ export class UsersController {
     const userPlanner = await this.plannerRepository.findOne({ user });
     const body = {
       role: userPlanner ? 'planner' : 'creator',
-      username: user.name,
-      useremail: user.email,
+      username: user.username,
+      fullName: user.fullName,
+      email: user.email,
     };
 
     return { token: this.jwt.generateToken(body) };
