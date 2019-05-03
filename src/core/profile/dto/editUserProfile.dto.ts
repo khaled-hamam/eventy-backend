@@ -1,4 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { mobileValidator } from '@utils/validation/mobileValidator';
+import { ValidateIf } from '@utils/ValidateIf.decorator';
 
 export class EditUserProfileDTO {
   @IsEmail()
@@ -10,6 +12,7 @@ export class EditUserProfileDTO {
 
   @IsString()
   @IsNotEmpty()
+  @ValidateIf(mobile => mobileValidator.validate(mobile), { message: 'mobile is not valid' })
   public mobile: string;
 
   @IsString()

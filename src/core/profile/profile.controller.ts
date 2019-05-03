@@ -5,9 +5,7 @@ import { UserProfileDTO } from './dto/userProfile.dto';
 import { PlannerRepository } from '@core/users/planner.repository';
 import { UserRepository } from '@core/users/user.repository';
 import { copyObject } from '@utils/copyObject';
-import { User } from '@core/users/user.model';
 import { response } from 'express';
-import bodyParser = require('body-parser');
 
 @Controller('/profiles')
 export class ProfileController {
