@@ -15,6 +15,6 @@ export class PlannerRepository extends BaseTypeORMRepository<EventPlanner, Event
   }
 
   protected getCriteria(model: EventPlanner): object {
-    return { userEmail: model.email };
+    return { username: model.username };
   }
 }

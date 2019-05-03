@@ -15,12 +15,16 @@ export class EventPlannerEntity {
   @OneToMany(type => RequestEntity, request => request.planner)
   public pendingRequests: RequestEntity[];
 
+  public get username(): string {
+    return this.user.username;
+  }
+
   public get email(): string {
     return this.user.email;
   }
 
-  public get name(): string {
-    return this.user.name;
+  public get fullName(): string {
+    return this.user.fullName;
   }
 
   public get password(): string {

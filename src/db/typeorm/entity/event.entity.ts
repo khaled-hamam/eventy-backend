@@ -37,10 +37,10 @@ export class EventEntity {
   @Column()
   public attendeesLimit: number;
 
-  @Column()
+  @Column({ type: 'enum', enum: EventOptions })
   public eventOptions: EventOptions[];
 
-  @Column()
+  @Column('simple-array')
   public photosURL: string[];
 
   @ManyToOne(type => UserEntity, user => user.events)
