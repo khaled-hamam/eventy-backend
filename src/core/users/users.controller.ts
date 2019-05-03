@@ -21,7 +21,6 @@ export class UsersController {
   async registerUser(@Body() registerUserDto: RegisterUserDTO) {
     // TODO: Validation
     const user = new User(registerUserDto);
-    
     user.password = await this.hashing.hashPassword(user.password);
     await this.userRepository.save(user);
     response.status(201);
