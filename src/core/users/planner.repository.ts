@@ -11,10 +11,10 @@ export class PlannerRepository extends BaseTypeORMRepository<EventPlanner, Event
   }
 
   protected toModel(entity: EventPlannerEntity): EventPlanner {
-    return new EventPlanner({ ...entity, ...entity.user });
+    return new EventPlanner(entity);
   }
 
   protected getCriteria(model: EventPlanner): object {
-    return { userEmail: model.email };
+    return { username: model.username };
   }
 }
