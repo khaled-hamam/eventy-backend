@@ -3,10 +3,9 @@ import { EventPlanner } from '@core/users/planner.model';
 import { RequestState } from './interfaces/requestState.enum';
 
 export interface IRequest {
-
   event: Event;
   planner: EventPlanner;
-  requestState: RequestState;
+  state: RequestState;
 }
 
 export class Request {
@@ -16,8 +15,6 @@ export class Request {
 
   public constructor(data: IRequest) {
     Object.assign(this, {
-      event: null,
-      requestState: null,
       ...data,
     });
   }
