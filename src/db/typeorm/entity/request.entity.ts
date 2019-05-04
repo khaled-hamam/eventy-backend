@@ -1,7 +1,7 @@
 import { PrimaryGeneratedColumn, ManyToOne, Entity, OneToOne, JoinColumn, Column } from 'typeorm';
 import { EventPlannerEntity } from './eventplanner.entity';
 import { EventEntity } from './event.entity';
-import { RequestState } from '@core/requests/interfaces/requestState';
+import { RequestState } from '@core/requests/interfaces/requestState.enum';
 
 @Entity('request')
 export class RequestEntity {
@@ -15,6 +15,6 @@ export class RequestEntity {
   @JoinColumn()
   public event: EventEntity;
 
-  @Column()
+  @Column({ type: 'enum', enum: RequestState })
   public state: RequestState;
 }
