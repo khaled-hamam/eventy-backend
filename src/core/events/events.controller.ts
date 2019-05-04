@@ -1,33 +1,42 @@
+import { Permissions } from '@common/auth/permissions/permissions.decorator';
 import { Event } from './event.model';
 import { EventRepository } from './event.repository';
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
 import { response } from 'express';
 import { CreateEventDTO } from './dto/createEvent.dto';
 import { UpdateEventDTO } from './dto/updateEvent.dto';
+import { AuthGuard } from '@common/auth/auth.guard';
+import { Permission } from '@common/auth/permissions/permission.enum';
 
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventRepository: EventRepository) {}
 
-  @Post('/')
+  @Post('/create')
+  @UseGuards(AuthGuard)
+  @Permissions(Permission.CreateEvent)
   async createEvent(@Body() createEventDTO: CreateEventDTO) {
-    let event = new Event(createEventDTO);
+    const event = new Event(createEventDTO);
 
     await this.eventRepository.save(event);
     response.status(201);
   }
 
   @Get('/:id')
-  async getEvent(@Param() eventID: string) {
-    const event = await this.eventRepository.findOne({ id: +eventID });
+  async getEvent(@Param('id') id: string) {
+    const event = await this.eventRepository.findOne({ id: +id });
     return event;
   }
 
   @Put('/:id')
-  async updateEvent(@Param() eventID: string, @Body() updateEventDTO: UpdateEventDTO) {
-    let event = await this.eventRepository.findOne({ id: +eventID });
-    event = { ...event, ...updateEventDTO };
-
+  @UseGuards(AuthGuard)
+  @Permissions(Permission.EditEvent)
+  async updateEvent(@Param('id') id: string, @Body() updateEventDTO: UpdateEventDTO) {
+    let event = await this.eventRepository.findOne({ id: +id });
+    event = {
+      ...event,
+      ...updateEventDTO,
+    };
     await this.eventRepository.save(event);
 
     return event;

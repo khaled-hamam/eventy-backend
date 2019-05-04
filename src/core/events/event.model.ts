@@ -4,7 +4,7 @@ import { ILocation } from '@core/events/interfaces/ilocation';
 import { EventOptions } from './interfaces/eventOptions';
 
 export interface IEvent {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   date: Date;
@@ -13,7 +13,7 @@ export interface IEvent {
   budget: number;
   attendeesLimit: number;
   eventOptions: EventOptions[];
-  creator: User;
+  creator?: User;
   planner?: EventPlanner;
   photosURL?: string[];
 }
@@ -34,17 +34,12 @@ export class Event {
 
   public constructor(data: IEvent) {
     Object.assign(this, {
-      id: undefined,
       name: '',
       description: '',
-      date: null,
-      location: null,
       type: '',
       budget: 0,
       attendeesLimit: 0,
       eventOptions: [],
-      creator: null,
-      planner: null,
       photosURL: [],
       ...data,
     });
