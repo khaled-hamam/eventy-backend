@@ -38,10 +38,10 @@ export class EventEntity {
   public attendeesLimit: number;
 
   @Column()
-  public eventOptions: EventOptions[];
+  public eventOptions: EventOptions;
 
   @Column()
-  public photosURL: string[];
+  public photosURL: string;
 
   @ManyToOne(type => UserEntity, user => user.events)
   public creator: UserEntity;
