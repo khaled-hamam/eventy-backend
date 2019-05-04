@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { ValidateIf } from '@utils/ValidateIf.decorator';
+import { ValidateIf } from '@utils/validation/ValidateIf';
 import { passwordValidator } from '@utils/validation/passwordValidator';
 
 export class LoginUserDTO {
