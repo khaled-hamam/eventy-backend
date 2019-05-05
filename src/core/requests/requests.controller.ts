@@ -12,30 +12,31 @@ export class RequestsController {
   constructor(private readonly requestRepository: RequestRepository) {}
 
   @Get('/:id')
+  @UseGuards(AuthGuard)
   async getRequest(@Param('id') requestId: string) {
     const request = await this.requestRepository.findOne({ id: +requestId });
     return request;
   }
 
-  @Get('/:id/accept')
+  @Put('/:id/accept')
   @UseGuards(AuthGuard)
   @Permissions(Permission.ManageRequest)
-  async getAcceptedRequest(@Param('id') requestId: string) {
+  async acceptRequest(@Param('id') requestId: string) {
     const request = await this.requestRepository.findOne({ id: +requestId });
     request.state = RequestState.Accepted;
 
     await this.requestRepository.save(request);
-    response.status(201);
+    response.status(200);
   }
 
-  @Get('/:id/reject')
+  @Put('/:id/reject')
   @UseGuards(AuthGuard)
   @Permissions(Permission.ManageRequest)
-  async getRejectedRequest(@Param('id') requestId: string) {
+  async rejectRequest(@Param('id') requestId: string) {
     const request = await this.requestRepository.findOne({ id: +requestId });
     request.state = RequestState.Rejected;
 
     await this.requestRepository.save(request);
-    response.status(201);
+    response.status(200);
   }
 }
