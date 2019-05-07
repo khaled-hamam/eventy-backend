@@ -13,6 +13,12 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: ['localhost:3001'],
+    allowedHeaders: ['Authroization', 'Content-Type'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  });
+
   const PORT = process.env.PORT || 3000;
 
   await app.listen(PORT, () => {
