@@ -15,6 +15,6 @@ export class UserRepository extends BaseTypeORMRepository<User, UserEntity> {
   }
 
   protected getCriteria(model: User): object {
-    return { email: model.email };
+    return { username: model.username };
   }
 }
