@@ -28,13 +28,12 @@ export class AuthGuard implements CanActivate {
     request.user = decoded;
 
     const routePermissions = this.reflector.get<Permission[]>('permissions', context.getHandler());
-    if (routePermissions.length === 0) {
+    if (!routePermissions || routePermissions.length === 0) {
       return true;
     }
 
     const permissionStrategy = this.permissionsFactory.createPermissionStrategy(request.user.role);
     const userPermissions = permissionStrategy.getPermissions();
-
     let success = true;
     routePermissions.forEach(routePermission => {
       if (userPermissions.includes(routePermission) === false) {

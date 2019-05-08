@@ -3,6 +3,6 @@ import { PermissionStrategy } from './PermissionStrategy';
 
 export class PlannerPermissions implements PermissionStrategy {
   public getPermissions(): Permission[] {
-    return [Permission.EditProfile];
+    return [Permission.EditProfile, Permission.ManageRequest];
   }
 }
