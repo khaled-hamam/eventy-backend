@@ -8,6 +8,7 @@ import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { JwtService } from '@common/services/jwt.service';
 import { UserAlreadyExistsException } from '@common/excpetions/user-exists.exceptions';
 import { InvalidCredentialsException } from '@common/excpetions/invalid-credentials';
+import { EventPlanner } from './planner.model';
 
 @Controller('users')
 export class UsersController {
@@ -30,6 +31,11 @@ export class UsersController {
     const user = new User(registerUserDto);
     user.password = await this.hashing.hashPassword(user.password);
     await this.userRepository.save(user);
+
+    if (registerUserDto.role === 'planner') {
+      const planner = new EventPlanner(registerUserDto);
+      await this.plannerRepository.save(planner);
+    }
   }
 
   @Post('/login')
