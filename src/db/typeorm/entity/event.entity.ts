@@ -47,7 +47,7 @@ export class EventEntity {
   @JoinColumn({ name: 'creatorUsername' })
   public creator: UserEntity;
 
-  @OneToOne(type =>)
+  @ManyToOne(type => EventPlannerEntity, planner => planner.events)
   @JoinColumn({ name: 'plannerUsername' })
   public planner: EventPlannerEntity;
 }
