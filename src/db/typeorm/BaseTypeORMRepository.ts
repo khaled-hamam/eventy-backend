@@ -2,7 +2,7 @@ import { Repository, getRepository, ObjectType, FindManyOptions, FindConditions 
 import { IRepository } from '../interfaces/IRepository';
 
 export abstract class BaseTypeORMRepository<Model, Entity> implements IRepository<Model> {
-  private context: Repository<Entity>;
+  protected context: Repository<Entity>;
 
   public constructor(type: ObjectType<Entity>) {
     this.context = getRepository(type);
@@ -20,7 +20,9 @@ export abstract class BaseTypeORMRepository<Model, Entity> implements IRepositor
 
   public async findOne(options?: FindManyOptions<Entity>): Promise<Model | undefined>;
   public async findOne(conditions?: FindConditions<Entity>): Promise<Model | undefined>;
-  public async findOne(conditions?: FindConditions<Entity> | FindManyOptions<Entity>): Promise<Model | undefined> {
+  public async findOne(
+    conditions?: FindConditions<Entity> | FindManyOptions<Entity>,
+  ): Promise<Model | undefined> {
     const entities = await this.context.find(conditions);
     if (entities.length === 0) {
       return undefined;

@@ -10,6 +10,10 @@ export class PlannerRepository extends BaseTypeORMRepository<EventPlanner, Event
     super(EventPlannerEntity);
   }
 
+  public async save(model: EventPlanner): Promise<EventPlanner> {
+    return await this.context.save({ username: model.username, rating: model.rating, user: model });
+  }
+
   protected toModel(entity: EventPlannerEntity): EventPlanner {
     return new EventPlanner(entity);
   }

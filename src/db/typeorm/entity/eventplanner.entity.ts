@@ -6,7 +6,7 @@ import { EventEntity } from './event.entity';
 @Entity('event_planner')
 export class EventPlannerEntity {
   @OneToOne(type => UserEntity, { primary: true })
-  @JoinColumn()
+  @JoinColumn({ name: 'username' })
   public user: UserEntity;
 
   @Column()
