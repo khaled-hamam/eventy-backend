@@ -12,15 +12,7 @@ export class EventRepository extends BaseTypeORMRepository<Event, EventEntity> {
   }
 
   public async save(model: Event, options?: SaveOptions): Promise<Event> {
-    return await this.context.save(
-      {
-        ...model,
-        ...model.location,
-        creatorUsername: model.creator.username,
-        plannerUsername: model.planner.username,
-      },
-      options,
-    );
+    return await this.context.save({ ...model, ...model.location }, options);
   }
 
   protected toModel(entity: EventEntity): Event {

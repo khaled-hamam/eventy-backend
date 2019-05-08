@@ -37,8 +37,8 @@ export class EventEntity {
   @Column()
   public attendeesLimit: number;
 
-  @Column({ type: 'enum', enum: EventOptions, nullable: true })
-  public eventOptions: EventOptions[];
+  @Column({ type: 'simple-array', nullable: true })
+  public eventOptions: number[];
 
   @Column('simple-array')
   public photosURL: string[];
@@ -48,6 +48,6 @@ export class EventEntity {
   public creator: UserEntity;
 
   @ManyToOne(type => EventPlannerEntity, planner => planner.events)
-  @JoinColumn({ name: 'plannerUsername' })
+  @JoinColumn({ name: 'plannerUsername', referencedColumnName: 'username' })
   public planner: EventPlannerEntity;
 }
