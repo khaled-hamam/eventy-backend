@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, ManyToOne, Entity, Column } from 'typeorm';
+import { PrimaryGeneratedColumn, ManyToOne, Entity, Column, JoinColumn, OneToOne } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { EventPlannerEntity } from './eventplanner.entity';
 import { ILocation } from '@core/events/interfaces/ilocation';
@@ -37,15 +37,17 @@ export class EventEntity {
   @Column()
   public attendeesLimit: number;
 
-  @Column({ type: 'enum', enum: EventOptions })
+  @Column({ type: 'enum', enum: EventOptions, nullable: true })
   public eventOptions: EventOptions[];
 
   @Column('simple-array')
   public photosURL: string[];
 
   @ManyToOne(type => UserEntity, user => user.events)
+  @JoinColumn({ name: 'creatorUsername' })
   public creator: UserEntity;
 
-  @ManyToOne(type => EventPlannerEntity, planner => planner.user.events)
+  @OneToOne(type =>)
+  @JoinColumn({ name: 'plannerUsername' })
   public planner: EventPlannerEntity;
 }
