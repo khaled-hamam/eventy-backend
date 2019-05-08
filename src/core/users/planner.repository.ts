@@ -15,7 +15,7 @@ export class PlannerRepository extends BaseTypeORMRepository<EventPlanner, Event
   }
 
   protected toModel(entity: EventPlannerEntity): EventPlanner {
-    return new EventPlanner(entity);
+    return new EventPlanner({ ...entity, ...entity.user });
   }
 
   protected getCriteria(model: EventPlanner): object {
