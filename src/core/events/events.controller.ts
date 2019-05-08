@@ -1,7 +1,17 @@
 import { Permissions } from '@common/auth/permissions/permissions.decorator';
 import { Event } from './event.model';
 import { EventRepository } from './event.repository';
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  NotFoundException,
+} from '@nestjs/common';
 import { response } from 'express';
 import { CreateEventDTO } from './dto/createEvent.dto';
 import { UpdateEventDTO } from './dto/updateEvent.dto';
@@ -17,14 +27,16 @@ export class EventsController {
   @Permissions(Permission.CreateEvent)
   async createEvent(@Body() createEventDTO: CreateEventDTO) {
     const event = new Event(createEventDTO);
-
     await this.eventRepository.save(event);
-    response.status(201);
   }
 
   @Get('/:id')
   async getEvent(@Param('id') id: string) {
-    const event = await this.eventRepository.findOne({ id: +id });
+    const event = await this.eventRepository.findOne({ where: { id }, relations: ['creator', 'planner'] });
+    if (!event) {
+      throw new NotFoundException('Event not found.');
+    }
+
     return event;
   }
 
@@ -33,12 +45,16 @@ export class EventsController {
   @Permissions(Permission.EditEvent)
   async updateEvent(@Param('id') id: string, @Body() updateEventDTO: UpdateEventDTO) {
     let event = await this.eventRepository.findOne({ id: +id });
+    if (!event) {
+      throw new NotFoundException('Event not found.');
+    }
+
     event = {
       ...event,
       ...updateEventDTO,
     };
-    await this.eventRepository.save(event);
 
+    await this.eventRepository.save(event);
     return event;
   }
 }
