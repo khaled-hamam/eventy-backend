@@ -7,5 +7,6 @@ import { PlannerRepository } from './planner.repository';
   imports: [],
   controllers: [UsersController],
   providers: [UserRepository, PlannerRepository],
+  exports: [UserRepository, PlannerRepository],
 })
-export class UsersModule { }
+export class UsersModule {}

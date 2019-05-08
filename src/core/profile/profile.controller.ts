@@ -42,20 +42,15 @@ export class ProfileController {
     return copyObject(ProfileDTO, user);
   }
 
-  @Put('/:username')
+  @Put('/')
   @UseGuards(AuthGuard)
   @Permissions(Permission.EditProfile)
   async editProfile(
-    @Param('username') username: string,
     @Body() editUserProfileDTO: EditUserProfileDTO,
     // FIXME: add typing for usertoken object
     @UserToken() userToken: any,
   ) {
-    if (username !== userToken.username) {
-      throw new ForbiddenException();
-    }
-
-    let user = await this.userRepository.findOne({ username });
+    let user = await this.userRepository.findOne({ username: userToken.username });
     if (!user) {
       throw new NotFoundException('User not found.');
     }

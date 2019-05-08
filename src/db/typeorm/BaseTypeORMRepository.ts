@@ -1,4 +1,4 @@
-import { Repository, getRepository, ObjectType, FindManyOptions, FindConditions } from 'typeorm';
+import { Repository, getRepository, ObjectType, FindManyOptions, FindConditions, SaveOptions } from 'typeorm';
 import { IRepository } from '../interfaces/IRepository';
 
 export abstract class BaseTypeORMRepository<Model, Entity> implements IRepository<Model> {
@@ -31,8 +31,8 @@ export abstract class BaseTypeORMRepository<Model, Entity> implements IRepositor
     return this.toModel(entities[0]);
   }
 
-  public async save(model: Model): Promise<Model> {
-    return await this.context.save(model);
+  public async save(model: Model, options?: SaveOptions): Promise<Model> {
+    return await this.context.save(model, options);
   }
 
   public async delete(model: Model): Promise<void> {
