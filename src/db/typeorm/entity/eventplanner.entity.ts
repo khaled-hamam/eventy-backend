@@ -1,13 +1,24 @@
-import { Column, OneToMany, Entity, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Column,
+  OneToMany,
+  Entity,
+  OneToOne,
+  JoinColumn,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 import { RequestEntity } from './request.entity';
 import { EventEntity } from './event.entity';
 
 @Entity('event_planner')
 export class EventPlannerEntity {
-  @OneToOne(type => UserEntity, { primary: true })
-  @JoinColumn()
+  @OneToOne(type => UserEntity)
+  @JoinColumn({ name: 'username' })
   public user: UserEntity;
+
+  @PrimaryColumn()
+  public username: string;
 
   @Column()
   public rating: number;
@@ -15,9 +26,8 @@ export class EventPlannerEntity {
   @OneToMany(type => RequestEntity, request => request.planner)
   public pendingRequests: RequestEntity[];
 
-  public get username(): string {
-    return this.user.username;
-  }
+  @OneToMany(type => EventEntity, event => event.planner)
+  public events: EventEntity[];
 
   public get email(): string {
     return this.user.email;
@@ -37,9 +47,5 @@ export class EventPlannerEntity {
 
   public get pictureURL(): string {
     return this.user.pictureURL;
-  }
-
-  public get events(): EventEntity[] {
-    return this.user.events;
   }
 }

@@ -1,17 +1,12 @@
 import { EventPlanner } from '@core/users/planner.model';
+import { UserProfileDTO } from './userProfile.dto';
 
-export class UserProfileDTO {
-  public username: string;
-  public email: string;
-  public name: string;
-  public mobile: string;
-  public pictureURL: string;
-  public events: Event[];
-  public role: 'planner' | 'creator';
+export class PlannerProfileDTO extends UserProfileDTO {
   public rating?: number;
   public pendingRequests?: Request[];
 
   public constructor(data: EventPlanner) {
+    super(data);
     Object.assign(this, {
       email: '',
       username: '',

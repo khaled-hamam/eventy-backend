@@ -1,7 +1,7 @@
 import { User } from '@core/users/user.model';
 import { ILocation } from '@core/events/interfaces/ilocation';
 import { EventOptions } from '../interfaces/eventOptions';
-import { IsNumber, IsNotEmpty, IsString, IsDate } from 'class-validator';
+import { IsNumber, IsNotEmpty, IsString, IsDate, IsDateString } from 'class-validator';
 
 export class CreateEventDTO {
   @IsString()
@@ -12,7 +12,7 @@ export class CreateEventDTO {
   @IsNotEmpty()
   public readonly description: string;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   public readonly date: Date;
 

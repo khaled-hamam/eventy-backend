@@ -1,10 +1,10 @@
 import { EventRepository } from './event.repository';
 import { Module } from '@nestjs/common';
 import { EventsController } from './events.controller';
-import { AppModule } from '@core/app.module';
+import { UsersModule } from '@core/users/users.module';
 
 @Module({
-  imports: [],
+  imports: [UsersModule],
   controllers: [EventsController],
   providers: [EventRepository],
 })
