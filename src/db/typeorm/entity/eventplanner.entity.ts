@@ -26,6 +26,9 @@ export class EventPlannerEntity {
   @OneToMany(type => RequestEntity, request => request.planner)
   public pendingRequests: RequestEntity[];
 
+  @OneToMany(type => EventEntity, event => event.planner)
+  public events: EventEntity[];
+
   public get email(): string {
     return this.user.email;
   }
@@ -44,9 +47,5 @@ export class EventPlannerEntity {
 
   public get pictureURL(): string {
     return this.user.pictureURL;
-  }
-
-  public get events(): EventEntity[] {
-    return this.user.events;
   }
 }

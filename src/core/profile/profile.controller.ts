@@ -33,9 +33,12 @@ export class ProfileController {
   async getProfile(@Param('username') username: string, @Param('username', UserRolePipe) role: UserRole) {
     let user;
     if (role === 'planner') {
-      user = await this.plannerRepository.findOne({ where: { user: { username } }, relations: ['user'] });
+      user = await this.plannerRepository.findOne({
+        where: { user: { username } },
+        relations: ['user', 'events'],
+      });
     } else if (role === 'creator') {
-      user = await this.userRepository.findOne({ username });
+      user = await this.userRepository.findOne({ where: { username }, relations: ['events'] });
     }
 
     const ProfileDTO = role === 'planner' ? PlannerProfileDTO : UserProfileDTO;

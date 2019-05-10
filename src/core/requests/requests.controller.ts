@@ -25,7 +25,10 @@ export class RequestsController {
   @UseGuards(AuthGuard)
   @Permissions(Permission.ManageRequest)
   async getRequests(@UserToken() userToken: any) {
-    const requests = await this.requestRepository.find({ planner: { username: userToken.username } });
+    const requests = await this.requestRepository.find({
+      where: { planner: { username: userToken.username } },
+      relations: ['event'],
+    });
     return requests;
   }
 

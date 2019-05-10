@@ -34,7 +34,7 @@ export class EventsController {
   async createEvent(@Body() createEventDTO: CreateEventDTO, @UserToken() userToken: any) {
     const event = new Event(createEventDTO);
     event.creator = await this.userRepository.findOne({ username: userToken.username });
-    await this.eventRepository.save(event);
+    return await this.eventRepository.save(event);
   }
 
   @Get('/:id')
