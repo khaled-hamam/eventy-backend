@@ -1,3 +1,4 @@
+import { RequestManager } from './../../common/mediators/request-manager.mediator';
 import { Permissions } from '@common/auth/permissions/permissions.decorator';
 import { Event } from './event.model';
 import { EventRepository } from './event.repository';
@@ -6,26 +7,25 @@ import {
   Get,
   Post,
   Put,
-  Delete,
   Body,
   Param,
   UseGuards,
   NotFoundException,
+  Inject,
 } from '@nestjs/common';
 import { CreateEventDTO } from './dto/createEvent.dto';
 import { UpdateEventDTO } from './dto/updateEvent.dto';
 import { AuthGuard } from '@common/auth/auth.guard';
 import { Permission } from '@common/auth/permissions/permission.enum';
-import { EventOptions } from './interfaces/eventOptions';
 import { UserToken } from '@common/decorators/user-token.decorator';
 import { UserRepository } from '@core/users/user.repository';
-import { EventPlanner } from '@core/users/planner.model';
 
 @Controller('events')
 export class EventsController {
   constructor(
     private readonly eventRepository: EventRepository,
     private readonly userRepository: UserRepository,
+    @Inject('REQUEST_MANAGER') private readonly requestManager: RequestManager,
   ) {}
 
   @Post('/create')
@@ -34,7 +34,9 @@ export class EventsController {
   async createEvent(@Body() createEventDTO: CreateEventDTO, @UserToken() userToken: any) {
     const event = new Event(createEventDTO);
     event.creator = await this.userRepository.findOne({ username: userToken.username });
-    return await this.eventRepository.save(event);
+    const createdEvent = await this.eventRepository.save(event);
+    this.requestManager.notify('NEW_EVENT', createdEvent);
+    return createdEvent;
   }
 
   @Get('/:id')

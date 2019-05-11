@@ -14,6 +14,6 @@ export class RequestRepository extends BaseTypeORMRepository<Request, RequestEnt
   }
 
   protected getCriteria(model: Request): object {
-    return { event: model.event };
+    return { id: model.id };
   }
 }
