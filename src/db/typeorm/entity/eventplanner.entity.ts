@@ -23,6 +23,9 @@ export class EventPlannerEntity {
   @Column()
   public rating: number;
 
+  @Column()
+  public ratingCount: number;
+
   @OneToMany(type => RequestEntity, request => request.planner)
   public pendingRequests: RequestEntity[];
 

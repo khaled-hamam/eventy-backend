@@ -17,7 +17,7 @@ export class UserProfileDTO {
       mobile: '',
       pictureURL: '',
       events: [],
-      role: '',
+      role: 'creator',
       ...data,
     });
   }
