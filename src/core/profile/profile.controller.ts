@@ -7,6 +7,7 @@ import {
   UseGuards,
   NotFoundException,
   ForbiddenException,
+  Post,
 } from '@nestjs/common';
 
 import { AuthGuard } from './../../common/auth/auth.guard';
@@ -21,6 +22,7 @@ import { UserRolePipe } from '@common/pipes/user-role.pipe';
 import { UserRole } from '@core/users/user-roles.type';
 import { PlannerProfileDTO } from './dto/plannerProfile.dto';
 import { UserToken } from '@common/decorators/user-token.decorator';
+import { RatePlannerDTO } from './dto/ratePlanner.dto';
 
 @Controller('/profiles')
 export class ProfileController {
@@ -65,5 +67,14 @@ export class ProfileController {
     await this.userRepository.save(user);
 
     return copyObject(UserProfileDTO, user);
+  }
+
+  @Post('/rate/:username')
+  async updateRate(@Param('username') username, @Body() RatePlannerDTO: RatePlannerDTO) {
+    const planner = await this.plannerRepository.findOne({ username });
+    planner.rating =
+      (planner.ratingCount * planner.rating + RatePlannerDTO.newRate) / (planner.ratingCount + 1);
+    planner.ratingCount += 1;
+    await this.plannerRepository.save(planner);
   }
 }
