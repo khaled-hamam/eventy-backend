@@ -15,9 +15,9 @@ export class PlannerProfileDTO extends UserProfileDTO {
       mobile: '',
       pictureURL: '',
       events: [],
-      role: '',
-      rating: '',
-      ratingCount: '',
+      role: 'planner',
+      rating: 0,
+      ratingCount: 0,
       pendingRequests: [],
       ...data,
     });
