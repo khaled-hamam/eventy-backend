@@ -3,6 +3,7 @@ import { EventPlanner } from '@core/users/planner.model';
 import { RequestState } from './interfaces/requestState.enum';
 
 export interface IRequest {
+  id: number;
   event: Event;
   planner: EventPlanner;
   state: RequestState;
