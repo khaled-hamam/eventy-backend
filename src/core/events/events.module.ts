@@ -7,5 +7,6 @@ import { UsersModule } from '@core/users/users.module';
   imports: [UsersModule],
   controllers: [EventsController],
   providers: [EventRepository],
+  exports: [EventRepository],
 })
 export class EventsModule {}
