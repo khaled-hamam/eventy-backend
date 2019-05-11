@@ -4,7 +4,7 @@ import { RegisterUserDTO } from './dto/registerUser.dto';
 import { LoginUserDTO } from './dto/loginUser.dto';
 import { UserRepository } from './user.repository';
 import { PlannerRepository } from './planner.repository';
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Put, Param } from '@nestjs/common';
 import { JwtService } from '@common/services/jwt.service';
 import { UserAlreadyExistsException } from '@common/excpetions/user-exists.exceptions';
 import { InvalidCredentialsException } from '@common/excpetions/invalid-credentials';

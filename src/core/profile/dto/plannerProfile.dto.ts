@@ -3,6 +3,7 @@ import { UserProfileDTO } from './userProfile.dto';
 
 export class PlannerProfileDTO extends UserProfileDTO {
   public rating?: number;
+  public ratingCount?: number;
   public pendingRequests?: Request[];
 
   public constructor(data: EventPlanner) {
@@ -14,8 +15,9 @@ export class PlannerProfileDTO extends UserProfileDTO {
       mobile: '',
       pictureURL: '',
       events: [],
-      role: '',
-      rating: '',
+      role: 'planner',
+      rating: 0,
+      ratingCount: 0,
       pendingRequests: [],
       ...data,
     });
