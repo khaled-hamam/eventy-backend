@@ -31,7 +31,7 @@ export class RequestsController {
   async getRequests(@UserToken() userToken: any) {
     const requests = await this.requestRepository.find({
       where: { planner: { username: userToken.username } },
-      relations: ['event'],
+      relations: ['event', 'event.creator'],
     });
     return requests;
   }

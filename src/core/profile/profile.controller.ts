@@ -23,25 +23,19 @@ import { UserRole } from '@core/users/user-roles.type';
 import { PlannerProfileDTO } from './dto/plannerProfile.dto';
 import { UserToken } from '@common/decorators/user-token.decorator';
 import { RatePlannerDTO } from './dto/ratePlanner.dto';
+import { ProfileCachingService } from './profile-caching.service';
 
 @Controller('/profiles')
 export class ProfileController {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly plannerRepository: PlannerRepository,
+    private readonly cachingService: ProfileCachingService,
   ) {}
 
   @Get('/:username')
   async getProfile(@Param('username') username: string, @Param('username', UserRolePipe) role: UserRole) {
-    let user;
-    if (role === 'planner') {
-      user = await this.plannerRepository.findOne({
-        where: { user: { username } },
-        relations: ['user', 'events'],
-      });
-    } else if (role === 'creator') {
-      user = await this.userRepository.findOne({ where: { username }, relations: ['events'] });
-    }
+    const user = await this.cachingService.findByUsername(role, username);
 
     const ProfileDTO = role === 'planner' ? PlannerProfileDTO : UserProfileDTO;
     return copyObject(ProfileDTO, user);
@@ -55,7 +49,10 @@ export class ProfileController {
     // FIXME: add typing for usertoken object
     @UserToken() userToken: any,
   ) {
-    let user = await this.userRepository.findOne({ username: userToken.username });
+    let user = await this.userRepository.findOne({
+      where: { username: userToken.username },
+      relations: ['events'],
+    });
     if (!user) {
       throw new NotFoundException('User not found.');
     }
